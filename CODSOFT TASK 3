@@ -1,0 +1,62 @@
+# CODSOFT Python Programming Internship
+# Task 3: Password Generator
+# Submitted by: [UTKARSH UPADHYAY]
+
+import random
+import string
+
+def generate_password(length, complexity):
+    """Function to generate a random password based on user requirements."""
+    # Defining character sets
+    lower = string.ascii_lowercase
+    upper = string.ascii_uppercase
+    digits = string.digits
+    symbols = string.punctuation
+
+    # Building character pool based on complexity
+    if complexity == 'low':
+        characters = lower + digits
+    elif complexity == 'medium':
+        characters = lower + upper + digits
+    else: # high complexity
+        characters = lower + upper + digits + symbols
+
+    # Generating random password
+    # PDF Requirement: Use a combination of random characters [cite: 52]
+    password = ''.join(random.choice(characters) for i in range(length))
+    return password
+
+def main():
+    print("\n--- 🔐 PASSWORD GENERATOR ---")
+    
+    try:
+        # User Input: Prompt for password length [cite: 51]
+        length = int(input("Enter the desired length of the password: "))
+        
+        if length < 4:
+            print("⚠️ Suggestion: Password length should be at least 4 for better security.")
+            length = 4
+
+        print("\nChoose Complexity Level:")
+        print("1. Low (Lowercase + Numbers)")
+        print("2. Medium (Lowercase + Uppercase + Numbers)")
+        print("3. High (Lowercase + Uppercase + Numbers + Symbols)")
+        
+        choice = input("Select complexity (1-3): ").strip()
+
+        complexity_map = {'1': 'low', '2': 'medium', '3': 'high'}
+        level = complexity_map.get(choice, 'medium')
+
+        # Generating and displaying the password [cite: 53]
+        generated_pass = generate_password(length, level)
+        
+        print("\n" + "="*30)
+        print(f"✅ Generated Password: {generated_pass}")
+        print("="*30)
+        print("Note: Please save this password in a secure place.")
+
+    except ValueError:
+        print("⚠️ Error: Please enter a valid number for the length.")
+
+if __name__ == "__main__":
+    main()
